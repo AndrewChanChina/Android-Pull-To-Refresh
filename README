@@ -4,7 +4,7 @@ Background:
 	PullRefreshContainerView.java is originally forked from https://github.com/timahoney/Android-Pull-To-Refresh.
 	I fixed some issues. 
 
-	My implementation also benefits from thoughs of https://github.com/johannilsson/android-pulltorefresh
+	My implementation also benefits from thoughts of https://github.com/johannilsson/android-pulltorefresh
 
 Major potions:
 	1. Why I extend from LinearLayout instead of ScrollView? 
@@ -12,28 +12,22 @@ Major potions:
 public class PullRefreshContainerView extends LinearLayout {
     ...
 	
-	ScrollView allows only one child view, as a workaround of this limitation, you have to make your header view and ListView as children
-of ScrollView's single child. But if you do this, Android's default layout parameters like MATCH_PARENT won't work correctly. For example,
-when soft-keyborad show/hide or Landscape/portrait changes occurs, layout of ListView and header view will be wrong.
+	ScrollView allows only one child view, as a workaround of this limitation, you have to make your header view and ListVie as children of ScrollView's single child. But if you do this, Android's default layout parameters like MATCH_PARENT won't work correctly. For example, when soft-keyborad show/hide or Landscape/portrait changes occurs, layout of ListView and header view will be wrong.
     
-	https://github.com/timahoney/Android-Pull-To-Refresh override onMeasure to calculate layout height, but it does not always works.
-Because the onMeasure implementation calls function like getHeight(), but Android won't always provide correct height value, especially 
-when soft-keyboard hide/show.
+	https://github.com/timahoney/Android-Pull-To-Refresh override onMeasure to calculate layout height, but it does not always works. Because the onMeasure implementation calls function like getHeight(), but Android won't always provide correct height value, especially when soft-keyboard hide/show.
 
-    2. Why I do not set refresh header as ListView's header view?
+    2. Why do not I set refresh header as ListView's header view?
 	(like https://github.com/timahoney/android-pulltorefresh)
 	
 	First, it is diffcult to control header view's visibility by scroll.
 	Second, it is diffcult to handle header view's padding change for devices that support overscroll by default, like Samsung i 9100.
 
-    3. Why I do not control header view's visibility by scroll?
+    3. Why do not I control header view's visibility by scroll?
     (Both https://github.com/timahoney/Android-Pull-To-Refresh and https://github.com/timahoney/android-pulltorefresh do it by scroll).
 	
-	View's scroll can not be fully controlled, and funtion call like scrollTo/smoothScrollTo won't always works. The functions won't work
-when soft-keyboard hide/show. But if I hide it (make its (width, height) to be (1, 1)), I am sure it won't show.
+	View's scroll can not be fully controlled, and funtion call like scrollTo/smoothScrollTo won't always works. The functions won't work when soft-keyboard hide/show. But if I hide it (make its (width, height) to be (1, 1)), I am sure it won't show.
 
     4. How do I control header view's visibility?
 	
 	Make its (width, height) to be (1, 1) to hide it.
-	When user touch screen and move, intercept touch event when ListView scroll to top and user still trying to scroll down, calculate move
-distance from touch event, and set header view's height dynamically. (This is the thoughts from https://github.com/johannilsson/android-pulltorefresh)
+	When user touch screen and move, intercept touch event when ListView scroll to top and user still trying to scroll down, calculate move distance from touch event, and set header view's height dynamically. (This is the thoughts from https://github.com/johannilsson/android-pulltorefresh)
